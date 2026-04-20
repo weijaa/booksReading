@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding 聖經 — Part 1 Chapter 1 讀書會報告</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica Neue', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0a0a0a;
+    color: #f0f0f0;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .slideshow {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 60px 80px;
+    position: absolute;
+    top: 0; left: 0;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .slide.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── 背景主題 ── */
+  .slide-cover   { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%); }
+  .slide-section { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+  .slide-content { background: #111; }
+  .slide-quote   { background: linear-gradient(135deg, #1a1a1a, #0d1117); }
+  .slide-end     { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+
+  /* ── 封面 ── */
+  .cover-eyebrow {
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #7c83fd;
+    margin-bottom: 24px;
+  }
+  .cover-title {
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(90deg, #7c83fd, #a8edea, #7c83fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+  }
+  .cover-subtitle {
+    font-size: 28px;
+    color: #aaa;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+  }
+  .cover-tag {
+    background: rgba(124,131,253,0.15);
+    border: 1px solid rgba(124,131,253,0.4);
+    color: #7c83fd;
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  /* ── 章節分隔頁 ── */
+  .section-number {
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(124,131,253,0.12);
+    line-height: 1;
+    margin-bottom: -20px;
+  }
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #7c83fd;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .section-desc {
+    font-size: 18px;
+    color: #888;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+  .section-time {
+    margin-top: 32px;
+    font-size: 13px;
+    color: #555;
+    letter-spacing: 2px;
+  }
+
+  /* ── 內容頁 ── */
+  .slide-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .slide-badge {
+    background: linear-gradient(135deg, #7c83fd, #a8edea);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+  .slide-h1 {
+    font-size: 38px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .slide-h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 32px;
+    border-left: 4px solid #7c83fd;
+    padding-left: 16px;
+  }
+
+  /* ── 卡片網格 ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .card-icon { font-size: 32px; margin-bottom: 12px; }
+  .card-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .card-body  { font-size: 14px; color: #aaa; line-height: 1.7; }
+
+  .card-accent {
+    background: linear-gradient(135deg, rgba(124,131,253,0.1), rgba(168,237,234,0.05));
+    border-color: rgba(124,131,253,0.3);
+  }
+
+  /* ── 引言 ── */
+  .quote-box {
+    background: rgba(255,255,255,0.03);
+    border-left: 4px solid #7c83fd;
+    border-radius: 0 12px 12px 0;
+    padding: 28px 32px;
+    margin: 16px 0;
+  }
+  .quote-text {
+    font-size: 20px;
+    line-height: 1.8;
+    color: #ddd;
+    font-style: italic;
+  }
+  .quote-text em { color: #7c83fd; font-style: normal; font-weight: 700; }
+  .quote-author {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #666;
+    letter-spacing: 1px;
+  }
+
+  /* ── 統計數字 ── */
+  .stat-row { display: flex; gap: 24px; margin: 24px 0; }
+  .stat-box {
+    flex: 1;
+    background: rgba(124,131,253,0.08);
+    border: 1px solid rgba(124,131,253,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #7c83fd, #a8edea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label { font-size: 13px; color: #888; }
+
+  /* ── 清單 ── */
+  .bullet-list { list-style: none; }
+  .bullet-list li {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: #ccc;
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    color: #7c83fd;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .bullet-list strong { color: #fff; }
+
+  /* ── 對比 ── */
+  .versus {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    margin: 20px 0;
+  }
+  .vs-side {
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .vs-side.pro { border: 1px solid rgba(74,222,128,0.3); }
+  .vs-side.con { border: 1px solid rgba(248,113,113,0.3); }
+  .vs-label { font-size: 11px; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; }
+  .vs-label.pro { color: #4ade80; }
+  .vs-label.con { color: #f87171; }
+  .vs-name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .vs-text { font-size: 14px; color: #aaa; line-height: 1.6; }
+  .vs-center { font-size: 28px; font-weight: 900; color: #555; }
+
+  /* ── FAAFO ── */
+  .faafo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .faafo-item {
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 20px 12px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .faafo-letter {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #7c83fd, #a8edea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .faafo-word  { font-size: 12px; color: #888; margin-bottom: 4px; }
+  .faafo-zh    { font-size: 14px; color: #ddd; font-weight: 600; }
+
+  /* ── 時程進度 ── */
+  .agenda-list { display: flex; flex-direction: column; gap: 12px; }
+  .agenda-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    border-left: 3px solid transparent;
+  }
+  .agenda-item.active-agenda { border-left-color: #7c83fd; background: rgba(124,131,253,0.08); }
+  .agenda-time { font-size: 13px; color: #7c83fd; font-weight: 700; width: 60px; flex-shrink: 0; }
+  .agenda-label { font-size: 15px; color: #ddd; }
+  .agenda-sub   { font-size: 13px; color: #666; }
+
+  /* ── 討論題目 ── */
+  .discussion-box {
+    background: rgba(168,237,234,0.06);
+    border: 1px solid rgba(168,237,234,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .discussion-num { font-size: 11px; color: #a8edea; letter-spacing: 2px; margin-bottom: 8px; }
+  .discussion-q   { font-size: 17px; color: #fff; line-height: 1.6; }
+
+  /* ── 導覽 ── */
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    right: 40px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 100;
+  }
+  .nav button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav button:hover { background: rgba(124,131,253,0.3); border-color: #7c83fd; }
+  .nav-counter {
+    font-size: 13px;
+    color: #555;
+    letter-spacing: 1px;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  /* ── 進度條 ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #7c83fd, #a8edea);
+    transition: width 0.4s ease;
+    z-index: 200;
+  }
+
+  .highlight { color: #7c83fd; font-weight: 700; }
+  .highlight-green { color: #4ade80; font-weight: 700; }
+  .highlight-yellow { color: #fbbf24; font-weight: 700; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .chef-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .chef-box {
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .chef-box.old {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .chef-box.new {
+    background: rgba(124,131,253,0.08);
+    border: 1px solid rgba(124,131,253,0.3);
+  }
+  .chef-emoji { font-size: 48px; margin-bottom: 12px; }
+  .chef-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .chef-items { font-size: 13px; color: #888; line-height: 2; }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+  }
+  .timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+  }
+  .timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #7c83fd;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .timeline-line {
+    width: 2px;
+    flex: 1;
+    background: rgba(124,131,253,0.2);
+    margin: 4px 0;
+    min-height: 24px;
+  }
+  .timeline-content { padding-bottom: 20px; flex: 1; }
+  .timeline-date { font-size: 12px; color: #7c83fd; letter-spacing: 1px; margin-bottom: 4px; }
+  .timeline-text { font-size: 15px; color: #ccc; line-height: 1.6; }
+  .timeline-text strong { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="slideshow" id="slideshow">
+
+  <!-- ════════════ 封面 ════════════ -->
+  <div class="slide slide-cover active">
+    <div class="cover-eyebrow">📚 讀書會報告 · 2026.03.11</div>
+    <div class="cover-title">Vibe Coding 聖經</div>
+    <div class="cover-subtitle">Part 1 · Chapter 1<br>未來已經來臨：程式設計的重大轉變正在發生</div>
+    <div class="cover-meta">
+      <span class="cover-tag">⏱ 40 分鐘報告</span>
+      <span class="cover-tag">📖 6 個章節</span>
+      <span class="cover-tag">🤖 AI × 開發</span>
+    </div>
+  </div>
+
+  <!-- ════════════ 作者介紹 ════════════ -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">AUTHORS</span>
+      <h1 class="slide-h1">關於兩位作者</h1>
+    </div>
+    <div class="grid-2">
+      <!-- Steve -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;">
+        <div style="font-size:11px;letter-spacing:3px;color:#7c83fd;margin-bottom:8px;">AUTHOR 1</div>
+        <div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;">Steve Yegge</div>
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">業界傳奇工程師 · Amazon & Google 30 年</div>
+        <ul class="bullet-list">
+          <li>Amazon、Google 資深工程師，<strong>Google 任職逾 20 年</strong></li>
+          <li>研究 AI 工具對開發者生產力的影響超過十年，長期對相關論點持懷疑態度</li>
+          <li>發現 Sourcegraph 工具讓開發者生產力提升 <strong>99%</strong>、Google Code Search 提升 <strong>55%</strong>，開始轉變立場</li>
+          <li>2024 年嘗試 vibe coding 後大為驚艷，撰文〈Death of the Junior Developer〉引發廣泛討論</li>
+        </ul>
+        <div class="quote-box" style="margin-top:16px;padding:16px 20px;">
+          <p style="font-size:14px;color:#ddd;font-style:italic;">「成就斐然，但一直感到困惑——直到 AI 讓他重新看見程式設計的本質。」</p>
+        </div>
+      </div>
+      <!-- Gene -->
+      <div style="background:rgba(124,131,253,0.06);border:1px solid rgba(124,131,253,0.2);border-radius:16px;padding:28px;">
+        <div style="font-size:11px;letter-spacing:3px;color:#a8edea;margin-bottom:8px;">AUTHOR 2</div>
+        <div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;">Gene Kim</div>
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">《鳳凰專案》《DevOps 指南》作者 · 離開程式設計 17 年</div>
+        <ul class="bullet-list">
+          <li>DevOps 領域代表人物，著有《The Phoenix Project》、《The DevOps Handbook》等暢銷書</li>
+          <li>1992 年踏入軟體業，在職業生涯中期<strong>逐漸遠離寫程式</strong>，專注於研究與寫作</li>
+          <li>2024 年 6 月與 Steve 相遇，重拾 vibe coding 工具後震驚於自己竟能再次寫程式</li>
+          <li>寫書期間 4 天內用 Claude Code 寫了 <strong>4,176 行 Clojure 程式</strong>，速度是歷史均值的 16 倍</li>
+        </ul>
+        <div class="quote-box" style="margin-top:16px;padding:16px 20px;border-left-color:#a8edea;">
+          <p style="font-size:14px;color:#ddd;font-style:italic;">「沒有 AI 的話，我不可能完成這些事情。AI 不只讓我做事更快速，也讓我能做出更大膽的計畫。」</p>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:#555;margin-top:20px;text-align:center;">
+      兩人自身的旅程，正是這本書最有力的證據——vibe coding 對任何程度的開發者都有效
+    </p>
+  </div>
+
+  <!-- ════════════ 開場：FAAFO ════════════ -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">開場</span>
+      <h1 class="slide-h1">這本書的核心主張</h1>
+    </div>
+    <p style="font-size:17px;color:#aaa;margin-bottom:28px;line-height:1.7;">
+      Vibe Coding 可能是軟體開發界<span class="highlight">有史以來最重大的變革</span>。<br>
+      AI 賦予你 5 項超能力，作者稱之為 <span class="highlight">FAAFO 框架</span>：
+    </p>
+    <div class="faafo-grid">
+      <div class="faafo-item">
+        <div class="faafo-letter">F</div>
+        <div class="faafo-word">Fast</div>
+        <div class="faafo-zh">快速</div>
+      </div>
+      <div class="faafo-item">
+        <div class="faafo-letter">A</div>
+        <div class="faafo-word">Ambitious</div>
+        <div class="faafo-zh">野心</div>
+      </div>
+      <div class="faafo-item">
+        <div class="faafo-letter">A</div>
+        <div class="faafo-word">Autonomous</div>
+        <div class="faafo-zh">自主</div>
+      </div>
+      <div class="faafo-item">
+        <div class="faafo-letter">F</div>
+        <div class="faafo-word">Fun</div>
+        <div class="faafo-zh">樂趣</div>
+      </div>
+      <div class="faafo-item">
+        <div class="faafo-letter">O</div>
+        <div class="faafo-word">Optionality</div>
+        <div class="faafo-zh">選擇權</div>
+      </div>
+    </div>
+    <p style="font-size:15px;color:#666;margin-top:16px;text-align:center;">
+      AI 不只是提升開發速度，它讓你能解決「過去認為不可行」的專案
+    </p>
+  </div>
+
+  <!-- ════════════ SECTION 1-1 ════════════ -->
+  <div class="slide slide-section">
+    <div class="section-number">1-1</div>
+    <div class="section-label">Section One</div>
+    <div class="section-title">Vibe Coding 的崛起</div>
+    <div class="section-desc">從科幻小說走進現實的對話式程式設計，一個詞在 2025 年改變了整個技術圈的對話方向。</div>
+    <div class="section-time">⏱ 第 5–13 分鐘</div>
+  </div>
+
+  <!-- Karpathy -->
+  <div class="slide slide-quote">
+    <div class="slide-header">
+      <span class="slide-badge">1-1</span>
+      <h1 class="slide-h1">Karpathy 的宣言</h1>
+    </div>
+    <div class="quote-box">
+      <p class="quote-text">
+        「有一種新的程式設計方式，我稱為 <em>vibe coding</em>，<br>
+        你可以完全沉浸在氛圍（vibe）之中，擁抱指數性的成長，<br>
+        然後<em>忘掉程式碼的存在</em>。」
+      </p>
+      <p class="quote-author">— Andrej Karpathy · 2025 年 2 月 · OpenAI 共同創辦人、Tesla AI 前主管</p>
+    </div>
+    <div class="quote-box" style="margin-top:16px;">
+      <p class="quote-text" style="font-size:17px;">
+        「我只是說話……甚至不怎麼碰鍵盤。<br>
+        我幾乎都是選擇『全部接受』，不再去檢查差異了。<br>
+        收到錯誤訊息的時候，我<em>只會複製貼上</em>，<em>通常都能修好</em>。」
+      </p>
+      <p class="quote-author">— Karpathy 描述自己的日常工作方式</p>
+    </div>
+    <p style="font-size:14px;color:#555;margin-top:16px;">
+      ✦ 程式碼超出他理解範圍時，他「要求隨機進行修改，直到問題消失」<br>
+      ✦ 核心邏輯：看到東西、說出東西、把東西複製貼上——優先考慮成果，而不是傳統的理解
+    </p>
+  </div>
+
+  <!-- 數據 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">1-1</span>
+      <h1 class="slide-h1">數字不會說謊</h1>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">25%</div>
+        <div class="stat-label">YC 2025 冬季梯次參與者<br>用 LLM 生成了 95% 的程式碼</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">2–10x</div>
+        <div class="stat-label">Claude Code 負責人 Boris Cherny：<br>AI 代理讓效率提升 2 倍，有人說 10 倍</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4000+</div>
+        <div class="stat-label">Shopify 要求：申請更多人手前<br>必須先說明「為何無法由 AI 達成」</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+        <div class="timeline-content">
+          <div class="timeline-date">2025.02</div>
+          <div class="timeline-text">Karpathy 發表推文，「vibe coding」在科技圈爆紅</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+        <div class="timeline-content">
+          <div class="timeline-date">幾個月內</div>
+          <div class="timeline-text"><strong>Y Combinator CEO Garry Tan</strong>：「Vibe coding 的時代來臨了。」</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot"></div></div>
+        <div class="timeline-content">
+          <div class="timeline-date">現在</div>
+          <div class="timeline-text">加拿大第 2 大上市公司 <strong>Shopify</strong>、旗下 4000+ 名開發人員全面導入 AI 開發</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 1-2 ════════════ -->
+  <div class="slide slide-section">
+    <div class="section-number">1-2</div>
+    <div class="section-label">Section Two</div>
+    <div class="section-title">Vibe Coding 的爭論</div>
+    <div class="section-desc">科技圈領袖對 vibe coding 意見分歧，但他們的共識比分歧更重要。</div>
+    <div class="section-time">⏱ 第 13–20 分鐘</div>
+  </div>
+
+  <!-- 爭論 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">1-2</span>
+      <h1 class="slide-h1">兩個陣營，一個現實</h1>
+    </div>
+    <div class="versus">
+      <div class="vs-side con">
+        <div class="vs-label con">⚠️ 謹慎派</div>
+        <div class="vs-name">Canva CTO<br>Brendan Humphreys</div>
+        <div class="vs-text" style="margin-top:10px;">「不行，你不能在產品上使用 vibe coding。真正的 vibe coding 是工程師提示 AI 生成程式碼，只做最少量的監督。」</div>
+        <div style="height:16px;"></div>
+        <div class="vs-name">GitLab 首席工程師<br>Jessie Young</div>
+        <div class="vs-text" style="margin-top:10px;">「我 on call 的時候不准用 vibe coding！她擔心使用 vibe coding 卻不瞭解自己 commit 了什麼程式碼的工程師，遇上半夜 2 點必須為產品 debug 的自己。」</div>
+      </div>
+      <div class="vs-center">VS</div>
+      <div class="vs-side pro">
+        <div class="vs-label pro">✅ 擁抱派</div>
+        <div class="vs-name">Google 共同創辦人<br>Sergey Brin</div>
+        <div class="vs-text" style="margin-top:10px;">「熱切鼓勵 Google 工程師積極使用 AI 工具，把注意力從程式碼的細節轉移到產品方向上。工程師的角色更像是產品工程師，他們決定的是『產品該做什麼』。」</div>
+      </div>
+    </div>
+    <div class="quote-box" style="margin-top:20px;background:rgba(255,255,255,0.02);">
+      <p style="font-size:15px;color:#aaa;text-align:center;">
+        雙方都認同：<span class="highlight">AI 程式設計工具正在重塑軟體開發的基礎</span>，<br>
+        共同的問題是：<strong style="color:#fbbf24;">使用 AI 協助軟體設計時，可以多大程度地把大腦關掉？</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 1-3 ════════════ -->
+  <div class="slide slide-section">
+    <div class="section-number">1-3</div>
+    <div class="section-label">Section Three</div>
+    <div class="section-title">成熟大人的 Vibe Coding</div>
+    <div class="section-desc">YouTube 上用一行提示詞生成飛行模擬器是一回事，在專業軟體領域使用是另一回事。</div>
+    <div class="section-time">⏱ 第 20–25 分鐘</div>
+  </div>
+
+  <!-- 成熟 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">1-3</span>
+      <h1 class="slide-h1">速度快，但該做的事一樣要做</h1>
+    </div>
+    <div class="two-col">
+      <div>
+        <h2 class="slide-h2">成熟 Vibe Coding 包含</h2>
+        <ul class="bullet-list">
+          <li><strong>安全審查</strong> (Security Review)</li>
+          <li><strong>測試覆蓋範圍</strong> (Test Coverage)</li>
+          <li><strong>爆炸範圍管理</strong> (Blast Radius Management)</li>
+          <li><strong>卓越營運</strong> (Operational Excellence)</li>
+        </ul>
+        <p style="font-size:14px;color:#888;margin-top:20px;line-height:1.7;">
+          你遇上老舊系統、沒人看得懂的程式碼，會更有自信地修改。<br>
+          你要建立測試來確認現有行為，用更嚴格的方式來實踐工程原則。
+        </p>
+      </div>
+      <div>
+        <h2 class="slide-h2">關鍵心態</h2>
+        <div class="card card-accent" style="margin-bottom:16px;">
+          <div class="card-title">🎯 你是主廚，設定標準</div>
+          <div class="card-body">出錯的頻率和規模也會增加，每道菜都要符合你的標準。</div>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">⚡ 廚房速度加快</div>
+          <div class="card-body">AI 工具會呈指數級成長，現在看到的是以後最弱的一個版本。</div>
+        </div>
+        <div class="card">
+          <div class="card-title">💡 核心信念</div>
+          <div class="card-body" style="color:#7c83fd;font-weight:600;">「如果沒有必要，就不該再手寫程式碼了。」</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 1-4 ════════════ -->
+  <div class="slide slide-section">
+    <div class="section-number">1-4</div>
+    <div class="section-label">Section Four</div>
+    <div class="section-title">驗證所謂的「10 倍速」：<br>Gene 的真實經驗</div>
+    <div class="section-desc">截稿前 72 小時，一個「瘋狂的決定」，和一個讓整本書變得更好的工具。</div>
+    <div class="section-time">⏱ 第 25–33 分鐘</div>
+  </div>
+
+  <!-- Gene 故事：背景 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">1-4</span>
+      <h1 class="slide-h1">問題：複製貼上讓我崩潰了</h1>
+    </div>
+    <div class="two-col">
+      <div>
+        <h2 class="slide-h2">情境</h2>
+        <ul class="bullet-list">
+          <li>距離交稿只剩 <strong>不到 72 小時</strong>，Steve 已經很緊張</li>
+          <li>他們不斷把大段書稿貼進 LLM，做重複概念檢查、章節排序、signposting</li>
+          <li>Gene 的手腕因為大量打字和觸控板操作已經開始疼痛</li>
+          <li>他夢想能像查 SQL 資料庫一樣查詢書稿：<em>「給我第 1–3 篇的大綱」「只要第 4 章」</em></li>
+        </ul>
+        <div class="quote-box" style="margin-top:20px;">
+          <p class="quote-text" style="font-size:15px;">
+            「我做了一個看起來非常瘋狂的決定：<em>投資這段寶貴的時間來開發一個生產力工具</em>，<br>而不是審稿、改稿或寫寫寫。」
+          </p>
+        </div>
+      </div>
+      <div>
+        <h2 class="slide-h2">時間軸</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-date">週六下午 4 點</div>
+              <div class="timeline-text">馬拉松會議後休息，Gene 打開 2022 年寫的 Markdown parser，<strong>讓 Claude Code 幫他搞懂它</strong></div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-date">52 分鐘後</div>
+              <div class="timeline-text">「列出所有章節」「取得某章節的所有小節文字」等功能<strong>幾乎全部運作了</strong></div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-date">接下來 4 天</div>
+              <div class="timeline-text">在編書的空檔中、休息時、刷牙時……持續開發</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="timeline-dot"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-date">週二凌晨 2 點</div>
+              <div class="timeline-text">交稿前 3 小時，Gene 才第一次數了行數，<strong>驚呆了</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gene 故事：數字 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">1-4</span>
+      <h1 class="slide-h1">4 天的成果數字</h1>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">4,176</div>
+        <div class="stat-label">行 Clojure 程式碼<br>2331 產品碼 + 1845 測試</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">16x</div>
+        <div class="stat-label">比歷史平均速度快 16 倍<br>比過去最高紀錄快 5 倍</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">261</div>
+        <div class="stat-label">次 AI 提示 × 32 次 commit<br>+ 3000+ 行文件與報告</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">6x</div>
+        <div class="stat-label">測試套件增長倍數<br>確保文字提取完美無缺</div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:20px;">
+      <div class="card card-accent">
+        <div class="card-title">🛠️ 他建了什麼？</div>
+        <div class="card-body">
+          ✦ 陣列切片語法提取內容（如 Parts[1..3]、Chapter[1,20]）<br>
+          ✦ 自動生成任意篇章的完整大綱<br>
+          ✦ 提取章節引言／結論，排除頭尾平衡比較<br>
+          ✦ 修復 Clojure 全域 atom 並發問題（讓 Claude Code 跑 100 threads 重現）
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">💰 投資回報</div>
+        <div class="card-body">
+          以前移動書稿文字需要<strong>幾分鐘且容易出錯</strong>，<br>
+          現在只需要<strong>按一個按鍵</strong>。<br><br>
+          書稿可以像資料庫一樣被查詢，讓他能更多使用 LLM，<br>手腕也不再那麼痛了。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gene 故事：金句 -->
+  <div class="slide slide-quote">
+    <div class="slide-header">
+      <span class="slide-badge">1-4</span>
+      <h1 class="slide-h1">那個讓 Gene 「驚呆了」的問題</h1>
+    </div>
+    <div class="quote-box" style="margin-bottom:24px;">
+      <p class="quote-text">
+        Steve 問了一個讓 Gene 楞住的問題：<br>
+        「你覺得自己像是寫了 4000 行程式碼嗎？」
+      </p>
+    </div>
+    <div class="quote-box">
+      <p class="quote-text">
+        「我在寫這個故事之前根本沒有數過自己寫了多少行程式碼。<br>
+        感覺就只是我<em>用魔法般的速度創造了自己需要的功能</em>，<br>
+        程式就像<em>流水一樣自然湧出</em>。」
+      </p>
+      <p class="quote-author">— Gene Kim，Vibe Coding 聖經共同作者</p>
+    </div>
+    <div class="stat-row" style="margin-top:24px;">
+      <div class="stat-box">
+        <div class="stat-num" style="font-size:28px;">「沒有 AI」</div>
+        <div class="stat-label">vs. 有 AI：16 倍差距<br>在同一個 repo 的歷史記錄可以證明</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="font-size:28px;">52 min</div>
+        <div class="stat-label">從「完全看不懂這段舊程式碼」<br>到「核心功能幾乎全部運作」</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="font-size:28px;">Gene ≠ Steve</div>
+        <div class="stat-label">Gene 自稱是「平庸的開發者」<br>→ 10x 不只是世界級工程師的特權</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 1-5 ════════════ -->
+  <div class="slide slide-section">
+    <div class="section-number">1-5</div>
+    <div class="section-label">Section Five</div>
+    <div class="section-title">你是主廚，不是一般廚師</div>
+    <div class="section-desc">這個比喻是整個 Part 1 最核心的概念轉換：你的角色已經改變了。</div>
+    <div class="section-time">⏱ 第 25–33 分鐘（續）</div>
+  </div>
+
+  <!-- 主廚比喻 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">1-5</span>
+      <h1 class="slide-h1">角色的根本轉換</h1>
+    </div>
+    <div class="chef-comparison" style="margin-bottom:24px;">
+      <div class="chef-box old">
+        <div class="chef-emoji">🍳</div>
+        <div class="chef-title">以前：一般廚師</div>
+        <div class="chef-items">
+          親自研究函式庫<br>
+          一行一行寫程式碼<br>
+          複製貼上網路答案<br>
+          看 log 一行一行除錯
+        </div>
+      </div>
+      <div class="chef-box new">
+        <div class="chef-emoji">👨‍🍳</div>
+        <div class="chef-title" style="color:#7c83fd;">現在：主廚</div>
+        <div class="chef-items" style="color:#ccc;">
+          決定「要做什麼」<br>
+          指揮 AI 副主廚執行<br>
+          品嚐每一道菜<br>
+          對成果負完全責任
+        </div>
+      </div>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">⚡ 最關鍵的轉變</div>
+      <div class="card-body" style="font-size:16px;">
+        以前：使用 AI 是為了<span class="highlight">讓自己加速</span><br>
+        現在：你的職責是<span class="highlight-green">讓 AI 加速</span>
+      </div>
+    </div>
+    <p style="font-size:14px;color:#888;margin-top:20px;line-height:1.7;text-align:center;">
+      「餐點端出廚房後，是<strong style="color:#fff;">你的</strong>個人名譽和米其林星級會承擔風險與挑戰。<br>
+      如果客人因為魚肉烤焦是醬汁難吃而退回餐點，你不能把責任推給副主廚。」
+    </p>
+  </div>
+
+  <!-- 主廚責任 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">1-5</span>
+      <h1 class="slide-h1">身為主廚，更廣大的責任</h1>
+    </div>
+    <div class="grid-2">
+      <div>
+        <ul class="bullet-list">
+          <li><strong>管理平行開發：</strong>同時運行複數 AI 代理，時間可能是幾分鐘到幾週——與傳統「單執行緒」完全不同</li>
+          <li><strong>處理複雜整合問題：</strong>合併 branch，處理不同代理同時修改相關程式碼時的衝突</li>
+          <li><strong>制定標準：</strong>明確定義程式的撰寫標準和流程，AI 團隊才能穩定有效率地運作</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="bullet-list">
+          <li><strong>建立導入程序：</strong>在系統引進新 AI 助理時，設定工作環境、存取權限和操作指引</li>
+          <li><strong>協調大型專案：</strong>執行比過去更大規模的工作，需要具備專案經理的思考方式</li>
+          <li><strong>版本控制升級：</strong>從「偶爾 commit」進化到管理複數 branch、cherry-pick、複雜 rebase</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-box" style="margin-top:20px;">
+      <p class="quote-text" style="font-size:15px;">
+        「任何軟體開發者如果想要不靠 AI 就和一支妥善管理的 AI 團隊硬碰硬，幾乎都會輸。
+        就像不管你的美式足球玩得再厲害，一個人對決一支 NFL 球隊還是一定會輸。」
+      </p>
+    </div>
+  </div>
+
+  <!-- ════════════ 小結 ════════════ -->
+  <div class="slide slide-section">
+    <div class="section-number">1-6</div>
+    <div class="section-label">小結</div>
+    <div class="section-title">Chapter 1 的核心訊息</div>
+    <div class="section-desc">不論你選擇擁抱或抗拒，未來每個軟體專案都可能成為人類與 AI 代理軍團之間的對話成果。</div>
+    <div class="section-time">⏱ 第 33–40 分鐘</div>
+  </div>
+
+  <!-- 總結 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">SUMMARY</span>
+      <h1 class="slide-h1">五個帶走的重點</h1>
+    </div>
+    <div class="grid-2">
+      <div class="card card-accent">
+        <div class="card-icon">🚀</div>
+        <div class="card-title">1. Vibe Coding 已是現實</div>
+        <div class="card-body">不再是實驗室玩具。YC、Shopify、Google 都在用，速度提升是真實可量測的。</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚔️</div>
+        <div class="card-title">2. 爭論在於「怎麼用」不是「要不要用」</div>
+        <div class="card-body">雙方都認同 AI 正在重塑基礎。關鍵問題是如何保持工程師的判斷力與責任感。</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">3. 速度快，責任不能少</div>
+        <div class="card-body">成熟的 vibe coding 仍需安全審查、測試、標準制定。不是放棄工程原則。</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">👨‍🍳</div>
+        <div class="card-title">4. 你是主廚，不是廚師</div>
+        <div class="card-body">角色從「寫程式碼」轉換為「指揮 AI 生成程式碼」，對成果負完全責任。</div>
+      </div>
+    </div>
+    <div class="card card-accent" style="margin-top:16px;">
+      <div class="card-title" style="text-align:center;">5. 你的職責：讓 AI 加速</div>
+      <div class="card-body" style="text-align:center;font-size:15px;">以前是讓自己加速；現在是解鎖整個 FAAFO 菜單——更快、更有野心、更自主、更有趣、更多選擇權</div>
+    </div>
+  </div>
+
+  <!-- 討論 -->
+  <!-- ════════════ 延伸閱讀：Fowler vs Steinberger ════════════ -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">延伸視角</span>
+      <h1 class="slide-h1">業界兩大聲音：Fowler vs Steinberger</h1>
+    </div>
+    <div class="versus">
+      <div class="vs-side con">
+        <div class="vs-label con">🎓 理論工藝派</div>
+        <div class="vs-name">Martin Fowler</div>
+        <div style="font-size:12px;color:#666;margin-bottom:12px;">Agile 宣言共同作者 · ThoughtWorks 首席科學家 · 40 年功力</div>
+        <div class="vs-text">
+          ✦ Vibe Coding「斷掉學習迴圈」<br>
+          ✦ 比喻：進化版 Stack Overflow 複製貼上<br>
+          ✦ 每個 AI 輸出都要像審查「愛說謊的 junior PR」一樣嚴格<br>
+          ✦ 擔憂非確定性帶來的資安問題<br>
+          ✦ 坦承：主要編輯同事文章，<strong>並非親自用 AI 寫複雜軟體</strong>
+        </div>
+      </div>
+      <div class="vs-center">VS</div>
+      <div class="vs-side pro">
+        <div class="vs-label pro">⚡ 第一線實戰派</div>
+        <div class="vs-name">Peter Steinberger</div>
+        <div style="font-size:12px;color:#666;margin-bottom:12px;">PSPDFKit 創辦人（億歐元出售）· 1 個月 6,600 commits · 剛加入 OpenAI</div>
+        <div class="vs-text">
+          ✦ 直言「I ship code I don't read」<br>
+          ✦ 稱之為「agentic engineering」，不用 vibe coding 這詞<br>
+          ✦ 管理 3–8 個 AI agent，像「星海爭霸多線操作」<br>
+          ✦ 關鍵秘密：<strong>closing the loop</strong>（自動編譯、lint、測試回饋迴路）<br>
+          ✦ 預估 2 週的重構 → Codex <strong>3 小時完成</strong>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;background:rgba(255,255,255,0.03);">
+      <div class="card-body" style="text-align:center;font-size:14px;color:#aaa;">
+        兩人描述的是<span class="highlight">完全不同的現實</span>——Fowler 面對老舊大型系統，Steinberger 從零打造新產品。<br>
+        Steinberger 休息 3 年後直接遇到最強工具，<strong style="color:#fff;">跳過了 GPT-2 到 GPT-4 的撞牆期</strong>，有全新眼光。
+      </div>
+    </div>
+  </div>
+
+  <!-- 兩人共識 -->
+  <div class="slide slide-content">
+    <div class="slide-header">
+      <span class="slide-badge">延伸視角</span>
+      <h1 class="slide-h1">分歧之外，他們其實都同意這些</h1>
+    </div>
+    <div class="grid-2" style="margin-bottom:20px;">
+      <div class="card card-accent">
+        <div class="card-title">🧠 架構思維比以往更重要</div>
+        <div class="card-body">Fowler：好的抽象層<br>Steinberger：用 agent 反而讓你成為更好的工程師</div>
+      </div>
+      <div class="card card-accent">
+        <div class="card-title">✅ 測試不可少</div>
+        <div class="card-body">執行方式不同，但結論一致——沒有測試迴路，agentic coding 就是在賭博</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📉 純 coding 技能貶值</div>
+        <div class="card-body">判斷「該做什麼」和「做得好不好」的能力升值<br>Steinberger：Builder 型如魚得水，Problem Solver 型會掙扎</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔄 迭代開發是王道</div>
+        <div class="card-body">都反對先寫完整 spec 再 build<br>小切片快速循環的原則沒有改變</div>
+      </div>
+    </div>
+    <div class="quote-box">
+      <p class="quote-text" style="font-size:16px;">
+        「AI 不會消滅軟體開發，會徹底改變它。」<br>
+        <span style="font-size:14px;color:#888;">——兩人少見的共同結論，比喻為從組合語言到高階語言的轉變</span>
+      </p>
+    </div>
+    <p style="font-size:13px;color:#555;margin-top:16px;text-align:center;">
+      來源：blog.aihao.tw · Fowler vs Steinberger · 2026.02.28
+    </p>
+  </div>
+
+  <!-- 討論 -->
+  <div class="slide slide-end">
+    <div class="slide-header">
+      <span class="slide-badge">DISCUSSION</span>
+      <h1 class="slide-h1">三個思考問題</h1>
+    </div>
+    <div class="discussion-box">
+      <div class="discussion-num">Q1</div>
+      <div class="discussion-q">Karpathy 說「把東西複製貼上，通常都能修好」——你認為這個工作方式在你目前的專案或職場情境中可行嗎？邊界在哪裡？</div>
+    </div>
+    <div class="discussion-box">
+      <div class="discussion-num">Q2</div>
+      <div class="discussion-q">「主廚」與「廚師」的比喻——你覺得自己目前處於哪個階段？轉換角色最大的障礙是什麼？技術？心態？還是組織文化？</div>
+    </div>
+    <div class="discussion-box">
+      <div class="discussion-num">Q3</div>
+      <div class="discussion-q">書中說「如果沒有必要，就不該再手寫程式碼了」。你同意嗎？什麼情況下手寫還是必要的？</div>
+    </div>
+    <p style="font-size:13px;color:#555;margin-top:20px;text-align:center;">
+      感謝收聽 · 下一章：程式設計沒有贏家，只有存者
+    </p>
+  </div>
+
+</div><!-- /slideshow -->
+
+<!-- 導覽 -->
+<div class="nav">
+  <button onclick="prevSlide()" title="上一頁">‹</button>
+  <span class="nav-counter" id="counter">1 / 17</span>
+  <button onclick="nextSlide()" title="下一頁">›</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+
+  function show(n) {
+    slides[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+    document.getElementById('progress').style.width = ((cur + 1) / slides.length * 100) + '%';
+  }
+
+  function nextSlide() { show(cur + 1); }
+  function prevSlide() { show(cur - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ')  nextSlide();
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                     prevSlide();
+  });
+
+  // 初始化
+  show(0);
+</script>
+</body>
+</html>

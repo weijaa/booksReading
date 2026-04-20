@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding 聖經 — Chapter 9</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <style>
+    :root {
+      --r-heading-font: 'Noto Sans TC', sans-serif;
+      --r-main-font: 'Noto Sans TC', sans-serif;
+      --r-heading-color: #eee;
+      --r-main-color: #ccc;
+      --r-link-color: #6ab0f5;
+    }
+    .reveal h1 { font-size: 2em; }
+    .reveal h2 { font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 0.2em; }
+    .reveal h3 { font-size: 1.1em; color: #aaa; }
+    .reveal section { text-align: left; }
+    .reveal section.center { text-align: center; }
+    .reveal ul { margin-left: 1.2em; }
+    .reveal li { margin: 0.35em 0; line-height: 1.55; }
+    .reveal table { font-size: 0.85em; width: 100%; }
+    .reveal table th { background: #2a2a2a; color: #ddd; }
+    .reveal table td, .reveal table th { padding: 0.4em 0.8em; border: 1px solid #444; }
+    .reveal table td { color: #ccc; }
+    .reveal blockquote {
+      background: #1e1e1e;
+      border-left: 4px solid #555;
+      margin: 0.8em 0;
+      padding: 0.6em 1em;
+      font-style: normal;
+      font-size: 0.88em;
+      color: #aaa;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .reveal pre code {
+      font-size: 0.75em;
+      line-height: 1.5;
+    }
+    .reveal .chapter-title {
+      text-align: center;
+      margin-top: 2em;
+    }
+    .reveal .chapter-title h1 {
+      font-size: 3em;
+      color: #555;
+      margin-bottom: 0;
+    }
+    .reveal .chapter-title h2 {
+      border: none;
+      font-size: 1.6em;
+      margin-top: 0.2em;
+      color: #ddd;
+    }
+    .reveal ol { margin-left: 1.2em; }
+    .reveal ol li { font-size: 0.88em; margin: 0.3em 0; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Cover -->
+    <section class="center">
+      <p style="color:#666; font-size:0.9em; margin-bottom:0.5em;">Vibe Coding 聖經</p>
+      <h1 style="font-size:3.5em; margin:0;">Chapter 9</h1>
+      <h2 style="border:none; margin-top:0.3em;">認識廚房與 AI 同伴</h2>
+    </section>
+
+    <!-- 本章目標 -->
+    <section>
+      <h2>本章目標</h2>
+      <ul>
+        <li>認識程式設計與開發的正確關係</li>
+        <li>了解如何讓 AI 直接取用工具</li>
+        <li>展示高效率的提示技巧</li>
+        <li>用真實案例說明 vibe coding 的開發體驗</li>
+      </ul>
+    </section>
+
+    <!-- 9-1 Title -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>9-1</h1>
+        <h2>Vibe Coding 的循環</h2>
+      </div>
+    </section>
+
+    <!-- 7 步驟 -->
+    <section>
+      <h2>Vibe Coding 循環 — 7 步驟</h2>
+      <ol>
+        <li><strong>設定目標</strong> — 給 AI 清楚、細緻的概念與成功標準</li>
+        <li><strong>任務拆解</strong> — 把工作拆成清楚、可執行的步驟</li>
+        <li><strong>開始對話</strong> — 讓 AI 生成計畫或開始指令</li>
+        <li><strong>仔細檢查</strong> — 驗證方案正確性，建立信任之前先查</li>
+        <li><strong>測試與驗證</strong> — 用 TDD 精神驗證 AI 產出</li>
+        <li><strong>改善與迭代</strong> — 持續修正、直到達成目標</li>
+        <li><strong>自動化工作流程</strong> — 把整個循環自動化</li>
+      </ol>
+    </section>
+
+    <!-- 循環圖 -->
+    <section>
+      <h2>Vibe Coding 循環圖</h2>
+      <pre><code>
+  設定目標 ──→ 任務拆解 ──→ 開始對話
+      ↑                           ↓
+自動化工作流程              仔細檢查
+      ↑                           ↓
+  改善與迭代 ←── 測試與驗證
+      </code></pre>
+      <blockquote>每次手動處理，都是 vibe coding 中付出的成本</blockquote>
+    </section>
+
+    <!-- 剪貼簿工具 -->
+    <section>
+      <h2>小技巧：剪貼簿管理工具</h2>
+      <table>
+        <thead><tr><th>平台</th><th>推薦工具</th></tr></thead>
+        <tbody>
+          <tr><td>macOS</td><td>Alfred、Paste</td></tr>
+          <tr><td>Windows</td><td>Ditto、ClipClip、Win+V（內建）</td></tr>
+          <tr><td>Linux / 跨平台</td><td>CopyQ</td></tr>
+        </tbody>
+      </table>
+      <blockquote style="margin-top:1em;">對顯示工程和上下文管理的工作流程有非常明顯的幫助</blockquote>
+    </section>
+
+    <!-- 9-2 Title -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>9-2</h1>
+        <h2>實戰故事：Gene 的影片剪取工具</h2>
+      </div>
+    </section>
+
+    <!-- 背景 -->
+    <section>
+      <h2>背景</h2>
+      <ul>
+        <li>Gene 花了 <strong>15 年</strong>在 YouTube 發現有趣內容就截圖</li>
+        <li>累積了數千張截圖，但找回原始影片片段極費時</li>
+        <li>決定用 <strong>vibe coding</strong> 一次解決這個問題</li>
+      </ul>
+    </section>
+
+    <!-- 工具目標 -->
+    <section>
+      <h2>工具目標</h2>
+      <blockquote>輸入影片的截圖，自動剪出對應的影片片段，並把逐字稿燒錄到畫面上</blockquote>
+      <ul>
+        <li>下載 YouTube 影片和逐字稿（使用 yt-dlp）</li>
+        <li>用 FFmpeg 根據時間標記擷取指定片段</li>
+        <li>從逐字稿擷取對應的文字內容</li>
+        <li>把字幕燒錄到影片片段畫面上</li>
+      </ul>
+    </section>
+
+    <!-- 任務一 -->
+    <section>
+      <h2>任務一：影片擷取</h2>
+      <blockquote>提示詞：給我開始和結束時間（單位為秒），生成對應的 FFmpeg 指令，用來擷取影片片段，直接在 shell 執行，輸出存成 /tmp/output.mp4</blockquote>
+      <ul>
+        <li>短短提示詞，效果良好</li>
+        <li>不需查 FFmpeg 文件，不需理解命令參數</li>
+        <li>幾分鐘內完成，Gene 決定直接往下走</li>
+      </ul>
+    </section>
+
+    <!-- 任務二 -->
+    <section>
+      <h2>任務二：處理逐字稿</h2>
+      <ul>
+        <li>解析 JSON 字幕，找出對應時間範圍的文字</li>
+        <li>AI 生成 Clojure 函式，但其中一個測試<strong>失敗</strong>了</li>
+      </ul>
+      <blockquote>
+        重要教訓：測試失敗的原因是<strong>測試本身有誤</strong>，而非程式碼<br><br>
+        AI 並非永遠可靠，必須保持警覺、驗證答案。<br>
+        AI 有時會長篇大論解釋自己為何正確，但結論可能是錯的。
+      </blockquote>
+    </section>
+
+    <!-- 任務三 (1/2) -->
+    <section>
+      <h2>任務三：生成字幕 <small style="font-size:0.5em; color:#666;">1/2</small></h2>
+      <ul>
+        <li>詢問 ChatGPT FFmpeg 支援的字幕格式（SRT 和 ASS）</li>
+        <li>選擇 <strong>SRT</strong> 格式（位置較少、較容易實作）</li>
+        <li>把逐字稿列表轉換成 SRT 檔</li>
+        <li>修改 FFmpeg 指令，用 SRT caption 檔生成字幕影片</li>
+      </ul>
+    </section>
+
+    <!-- 任務三 (2/2) -->
+    <section>
+      <h2>任務三：生成字幕 <small style="font-size:0.5em; color:#666;">2/2</small></h2>
+      <blockquote style="font-size:1em; margin-bottom:1.2em;">
+        Gene 在打開影片看到附字幕的畫面瞬間呼喊：<br><br>
+        「這真是扯到不可思議！」
+      </blockquote>
+      <ul>
+        <li>整個 vibe coding 合作不超過半小時</li>
+        <li>提示詞也沒有幾個字，沒費多少腦力</li>
+      </ul>
+    </section>
+
+    <!-- 成果 -->
+    <section>
+      <h2>成果 — 47 分鐘完成</h2>
+      <ul style="font-size:0.88em; line-height:1.4;">
+        <li>✅ 根據時間標記從 YouTube 影片擷取片段</li>
+        <li>✅ 把逐字稿轉換成 SRT 格式字幕輸出</li>
+        <li>✅ 用 FFmpeg 把字幕燒錄到影片片段</li>
+      </ul>
+      <hr style="margin: 0.6em 0; border-color: #444;">
+      <ul style="font-size:0.88em; line-height:1.4;">
+        <li>Gene 剪了 Erik Meijer 博士演講的 <strong>12 個精華片段</strong>發布</li>
+        <li>累積約 <strong>2.5 萬次瀏覽</strong></li>
+        <li>Erik Meijer 本人回覆：<em>「Looking amazing. Feels much faster to grasp…」</em></li>
+      </ul>
+    </section>
+
+    <!-- 9-3 Title -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>9-3</h1>
+        <h2>程式設計代理的案例</h2>
+      </div>
+    </section>
+
+    <!-- Gene Trello -->
+    <section>
+      <h2>實戰：Gene 的 Trello API 案例</h2>
+      <ul>
+        <li>Gene 用 Clojure 串接 Trello API</li>
+        <li>遇到 <strong>401 HTTP 錯誤</strong>（Unauthorized）</li>
+        <li>AI 協助多輪 vibe coding 循環除錯</li>
+        <li>關鍵問題：OAuth authorization header 設定錯誤</li>
+      </ul>
+    </section>
+
+    <!-- Steve Puppeteer (1/2) -->
+    <section>
+      <h2>實戰：Steve 的 Puppeteer 案例 <small style="font-size:0.5em; color:#666;">1/2</small></h2>
+      <ul>
+        <li>Steve 是 TypeScript 開發者，使用 Node.js</li>
+        <li>使用 VS Code + Sourcegraph Cody 進行開發</li>
+        <li>透過 <strong>Puppeteer MCP server</strong> 搭配 Claude</li>
+        <li>目標：建立 UI 自動化測試，找出介面問題</li>
+      </ul>
+    </section>
+
+    <!-- Steve Puppeteer (2/2) -->
+    <section>
+      <h2>實戰：Steve 的 Puppeteer 案例 <small style="font-size:0.5em; color:#666;">2/2</small></h2>
+      <ul>
+        <li>AI 能直接操控瀏覽器，發現並修正介面 bug</li>
+        <li>不需 Steve 手動追蹤問題</li>
+      </ul>
+      <blockquote style="margin-top:1em;">
+        Steve 將 Puppeteer 的功能暴露給 Claude，<br>
+        讓 AI 自己決定如何使用工具
+      </blockquote>
+    </section>
+
+    <!-- 9-4 Title -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>9-4</h1>
+        <h2>沒有工具的副主廚就只能出一張嘴</h2>
+      </div>
+    </section>
+
+    <!-- Steve 的 Puppeteer 故事 -->
+    <section>
+      <h2>實例：Steve 的 Puppeteer 故事</h2>
+      <ul style="font-size:0.9em; line-height:1.5;">
+        <li>Steve 要在 app 裡加入幾個 UI 元素</li>
+        <li>他只需描述問題——AI <strong>自主選用 Puppeteer MCP 工具</strong>來控制瀏覽器</li>
+        <li>AI 截圖分析 UI，精準找到正確的 DOM <code>select</code> element</li>
+        <li>Steve 全程只描述問題，不需要自己動工具</li>
+      </ul>
+      <blockquote style="font-size:0.88em; margin-top:0.8em;">
+        沒有工具的副主廚就只能出一張嘴——工具讓 AI 從「顧問」變成「行動者」
+      </blockquote>
+    </section>
+
+    <!-- 核心概念 -->
+    <section>
+      <h2>AI 作為工具的統籌者</h2>
+      <ul style="line-height:1.5;">
+        <li>AI 承擔約 <strong>95% 的工作</strong>，透過整合的工具集完成任務</li>
+        <li>你不需要懂每個工具的細節，只需描述目標</li>
+        <li><strong>挑一個主力 AI</strong>，再透過它呼叫其他工具</li>
+        <li>工具本身不難，難的是整合與協調——讓 AI 來做這件事</li>
+      </ul>
+    </section>
+
+    <!-- 程式設計代理的未來 -->
+    <section>
+      <h2>程式設計代理的未來</h2>
+      <p style="font-size:0.85em; margin-bottom:0.5em;">展望未來，我們知道會有更多強大的工具出現：</p>
+      <ul style="font-size:0.82em; line-height:1.5;">
+        <li><strong>非同步、遠端代理</strong>：透過 GitHub Issues 或聊天介面指派任務，能在自己的容器中建立開發環境、使用工具、執行測試。包括 Claude Code 與 GitHub 的整合，還有 OpenAI Codex。</li>
+        <li><strong>代理叢集</strong>：同時使用複數 Claude Code 代理，但同時操作好幾個代理需要高度的專注力和警覺心。</li>
+        <li><strong>監督型代理</strong>：監督其他代理，有時指示代理進行變更，有時傳訊息給你，因為需要你的判斷。</li>
+        <li><strong>代理網格</strong>：協調代理合作的「社群」，用於解決更大規模的問題，包括軟體開發和業務流程運行。</li>
+      </ul>
+    </section>
+
+    <!-- 9-5 Title -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>9-5</h1>
+        <h2>Vibe Coding 實作精要</h2>
+      </div>
+    </section>
+
+    <!-- 9-5 對話中不需要嚴格限制 -->
+    <section>
+      <h2>對話中，不需要太嚴格的限制</h2>
+      <ul>
+        <li><strong>AI 出錯很常見，沒什麼大不了的</strong> — 不要放棄對話，修改要求或調整方向，迭代才能活用 AI</li>
+        <li><strong>AI 對於錯字和隨便的文法有無限的寬容</strong> — 溝通不需要完美，專注解決問題即可</li>
+        <li><strong>盡量不花時間修正提示詞</strong> — 重點在結果，不是完美的提示詞，逐步收斂到正確答案</li>
+        <li><strong>擁抱混亂而高效的解題對話架構</strong> — 和 AI 合作像同事間的腦力激盪，不是在寫法律文件</li>
+      </ul>
+    </section>
+
+    <!-- 9-5 讓錯誤自己發聲 -->
+    <section>
+      <h2>讓錯誤自己發聲</h2>
+      <ul style="font-size:0.82em; line-height:1.4;">
+        <li><strong>編譯錯誤</strong> — 複製貼上編譯器的輸出</li>
+        <li><strong>執行錯誤</strong> — 提供堆疊追蹤（stack trace）</li>
+        <li><strong>非預期行為／測試失敗</strong> — 提供實際輸出和預期輸出</li>
+        <li><strong>IDE 問題</strong> — 提供相關的螢幕截圖</li>
+        <li><strong>UI 問題</strong> — 使用 Puppeteer 等螢幕擷取伺服器</li>
+      </ul>
+      <blockquote style="font-size:0.82em; margin-top:0.6em;">與其說明問題，不如直接貼上錯誤訊息：<br>「Invalid Date: TypeError: date.format is not a function」</blockquote>
+    </section>
+
+    <!-- 9-5 從模糊到精準 -->
+    <section>
+      <h2>從模糊到精準：打磨你的要求</h2>
+      <ul style="font-size:0.82em; line-height:1.4;">
+        <li>AI（還）沒辦法讀心——規格說明不夠清楚，往往帶來意外、困惑與挫折</li>
+        <li>誠實告訴 AI 你知道什麼、想要什麼，不需擔心語句混亂或中途改變想法</li>
+        <li>把口語內容複製給 AI，再補充你認為有幫助的額外資訊</li>
+      </ul>
+      <blockquote style="font-size:0.82em; margin-top:0.6em;">
+        以時區問題為例，AI 回傳：<br>
+        · 使用 datetime 與 zoneinfo/pytz 函式庫 &nbsp;· 先將毫秒制時間轉為 UTC &nbsp;· 建立時區轉換輔助函數
+      </blockquote>
+    </section>
+
+    <!-- 9-6 Title -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>9-6</h1>
+        <h2>程式設計介面的寒武紀大爆發</h2>
+      </div>
+    </section>
+
+    <!-- 9-6 內容 -->
+    <section>
+      <h2>程式設計介面的寒武紀大爆發</h2>
+      <ul style="font-size:0.85em; line-height:1.4;">
+        <li>GitHub Next 研究資深總監 Idan Gazit：這是一場規格與模式的「寒武紀大爆發」</li>
+        <li>程式碼自動完成、聊天介面、代理功能——與 AI 協作的最有效方式仍有待探索</li>
+        <li>AI 程式設計介面正同時往所有方向爆炸性演進，而非線性前進</li>
+        <li>某些奇異介面最終會消失，留下來的將成為程式設計的核心（就像編輯器與編譯器）</li>
+        <li>我們見識的不只是新物種，而是新一個「門」的誕生——全新的演化分支</li>
+      </ul>
+      <blockquote style="font-size:0.82em; margin-top:0.6em;">廚房的成就來自廚師，而不是工具。與 AI 有效協作的核心原則，在介面逐漸定型之後，仍然會維持其價值。</blockquote>
+    </section>
+
+    <!-- 9-7 Title -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>9-7</h1>
+        <h2>小結</h2>
+      </div>
+    </section>
+
+    <!-- 核心帶走訊息 -->
+    <section>
+      <h2>本章核心帶走訊息</h2>
+      <ul>
+        <li><strong>擁抱對話</strong></li>
+        <li><strong>讓錯誤自己發聲</strong></li>
+        <li><strong>仰賴 AI 的百科知識</strong></li>
+        <li><strong>選擇適合的工具</strong></li>
+        <li><strong>風格模糊，目標精確</strong></li>
+        <li><strong>讓 AI 能夠使用工具</strong></li>
+      </ul>
+    </section>
+
+    <!-- 實作題目 -->
+    <section class="center">
+      <h2 style="border:none;">現場實作</h2>
+      <p style="font-size:1.1em; color:#ccc; margin: 1em 0;">想一件你<strong>一直拖著沒做</strong>、但其實 AI 可以幫你完成的事</p>
+      <p style="font-size:0.85em; color:#888;">（整理資料、寫腳本、串 API、自動化某個重複操作……）</p>
+      <p style="font-size:1em; color:#aaa; margin-top:1.5em;">打開任何 AI 工具，現在就試試看</p>
+    </section>
+
+    <!-- 實作提示 -->
+    <section>
+      <h2>Vibe Coding 循環 — 現場版</h2>
+      <ol style="font-size:0.9em; line-height:1.6;">
+        <li><strong>設定目標</strong>：用一句話說清楚你想要什麼</li>
+        <li><strong>開始對話</strong>：不用想太多，直接貼給 AI，語句混亂也沒關係</li>
+        <li><strong>遇到錯誤</strong>：把錯誤訊息或截圖直接丟給 AI，讓它自己修正</li>
+        <li><strong>迭代</strong>：不滿意就繼續說，調整方向而不是重來</li>
+      </ol>
+      <blockquote style="margin-top:1em;">
+        完成後分享：你做了什麼？卡在哪裡？AI 怎麼幫你解決的？
+      </blockquote>
+    </section>
+
+    <!-- Q&A -->
+    <section class="center">
+      <h2 style="border:none; font-size:2em;">Q & A</h2>
+      <p style="color:#aaa;">謝謝聆聽</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    controls: true,
+    progress: true,
+    center: false,
+    width: 960,
+    height: 700,
+    margin: 0.08,
+  });
+</script>
+</body>
+</html>
