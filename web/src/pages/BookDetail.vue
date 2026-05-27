@@ -20,7 +20,7 @@
           <a
             v-for="slide in book.slides"
             :key="slide.publicPath"
-            :href="slide.publicPath"
+            :href="assetUrl(slide.publicPath)"
             target="_blank"
             rel="noopener noreferrer"
             class="slide-link"
@@ -56,11 +56,16 @@ const noteHtml = ref('')
 const noteLoading = ref(false)
 const noteError = ref('')
 const noteEmpty = ref(false)
+const base = import.meta.env.BASE_URL
 
 const book = computed(() => {
   const id = decodeURIComponent(route.params.id as string)
   return manifest.books.find(b => b.id === id) ?? null
 })
+
+function assetUrl(path: string) {
+  return base + path.slice(1)
+}
 
 async function loadNote() {
   if (!book.value?.notePath) return
@@ -68,7 +73,7 @@ async function loadNote() {
   noteError.value = ''
   noteEmpty.value = false
   try {
-    const res = await fetch(book.value.notePath)
+    const res = await fetch(assetUrl(book.value.notePath))
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const text = await res.text()
     if (!text.trim()) {
