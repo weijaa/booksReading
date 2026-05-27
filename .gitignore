@@ -1,0 +1,8 @@
+# 書本參考圖片（製作投影片用的素材，不進 repo）
+Book/**/*.jpg
+Book/**/*.jpeg
+Book/**/*.png
+Book/**/*.heic
+Book/**/*.JPG
+Book/**/*.PNG
+Book/**/*.HEIC

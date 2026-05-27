@@ -82,14 +82,30 @@ Book/<書名>/<章節名>/slides.html
 | 筆記 | `Book/[ Book ] <書名>.md` | root 層的 md 檔 |
 | 章節筆記 | `Book/<書名>/<章節>.md` | 從 HackMD 抓下來的章節 |
 
+### Git 規則：參考圖片不進 repo
+
+製作投影片時使用的書本照片、截圖等**原始參考圖片不應 commit 到 git**，原因：
+- 圖片檔案大，會讓 repo 變肥
+- 這些是製作過程的素材，不是最終產出
+
+**只有 `slides.html` 需要 commit**，圖片用完即可刪除或放在 git 追蹤範圍外。
+
+`.gitignore` 已設定忽略 `Book/` 下的常見圖片格式：
+```
+Book/**/*.jpg
+Book/**/*.jpeg
+Book/**/*.png
+Book/**/*.heic
+```
+
 ### 新增後的流程
 
 ```bash
 # 1. 確認本地正常
 cd web && npm run dev
 
-# 2. commit 並 push（GitHub Actions 自動部署）
-git add Book/<書名>/
+# 2. 只 commit slides.html，不要 commit 參考圖片
+git add Book/<書名>/<章節>/slides.html
 git commit -m "feat: add <書名> <章節> slides"
 git push
 ```
