@@ -15,6 +15,7 @@
         <div class="book-title">{{ book.title }}</div>
         <div class="book-tags">
           <span v-if="book.notePath" class="tag tag-notes">筆記</span>
+          <span v-if="book.chapters.length" class="tag tag-chapters">章節 ×{{ book.chapters.length }}</span>
           <span v-if="book.slides.length" class="tag tag-slides">投影片 ×{{ book.slides.length }}</span>
         </div>
       </router-link>
@@ -100,6 +101,12 @@ const books = manifest.books
   background: #1e3a2f;
   color: #5cde9a;
   border: 1px solid #2d5a40;
+}
+
+.tag-chapters {
+  background: #2a1e3f;
+  color: #b48ef5;
+  border: 1px solid #4a2e70;
 }
 
 .tag-slides {

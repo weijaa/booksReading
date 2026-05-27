@@ -13,20 +13,18 @@ async function main() {
   await page.screenshot({ path: 'screenshots/book-list.png' })
   console.log('✓ book-list.png')
 
-  // Click first book with notes (QBQ)
-  await page.click('.book-card:first-child')
+  // Click 重構 (has chapters)
+  const refactorCard = page.locator('.book-card', { hasText: '重構' })
+  await refactorCard.click()
   await page.waitForLoadState('networkidle')
-  await page.screenshot({ path: 'screenshots/book-detail-notes.png' })
-  console.log('✓ book-detail-notes.png')
+  await page.screenshot({ path: 'screenshots/book-chapters.png' })
+  console.log('✓ book-chapters.png')
 
-  // Go back and click vibeCoding (has slides)
-  await page.goBack()
+  // Click first chapter
+  await page.locator('.chapter-link').first().click()
   await page.waitForLoadState('networkidle')
-  const vibeCard = page.locator('.book-card', { hasText: 'vibeCoding' })
-  await vibeCard.click()
-  await page.waitForLoadState('networkidle')
-  await page.screenshot({ path: 'screenshots/book-detail-slides.png' })
-  console.log('✓ book-detail-slides.png')
+  await page.screenshot({ path: 'screenshots/chapter-content.png' })
+  console.log('✓ chapter-content.png')
 
   await browser.close()
 }
