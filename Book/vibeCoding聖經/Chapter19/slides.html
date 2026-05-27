@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 19 建立人類 + AI 開發團隊的標準</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --r-heading-font: 'Noto Sans TC', sans-serif;
+      --r-main-font: 'Noto Sans TC', sans-serif;
+      --r-heading-color: #eee;
+      --r-main-color: #ccc;
+      --r-link-color: #6ab0f5;
+    }
+    .reveal h1 { font-size: 2em; }
+    .reveal h2 { font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 0.2em; }
+    .reveal h3 { font-size: 1.1em; color: #aaa; }
+    .reveal section { text-align: left; }
+    .reveal section.center { text-align: center; }
+    .reveal ul { margin-left: 1.2em; }
+    .reveal li { margin: 0.35em 0; line-height: 1.55; }
+    .reveal table { font-size: 0.85em; width: 100%; }
+    .reveal table th { background: #2a2a2a; color: #ddd; }
+    .reveal table td, .reveal table th { padding: 0.4em 0.8em; border: 1px solid #444; }
+    .reveal table td { color: #ccc; }
+    .reveal blockquote {
+      background: #1e1e1e;
+      border-left: 4px solid #555;
+      margin: 0.8em 0;
+      padding: 0.6em 1em;
+      font-style: normal;
+      font-size: 0.88em;
+      color: #aaa;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .reveal pre code { font-size: 0.75em; line-height: 1.5; }
+    .reveal code { background: #222; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.85em; color: #6ab0f5; }
+    .reveal .chapter-title { text-align: center; margin-top: 2em; }
+    .reveal .chapter-title h1 { font-size: 3em; color: #555; margin-bottom: 0; }
+    .reveal .chapter-title h2 { border: none; font-size: 1.6em; margin-top: 0.2em; color: #ddd; }
+    .reveal ol { margin-left: 1.2em; }
+    .reveal ol li { font-size: 0.88em; margin: 0.3em 0; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 封面 -->
+    <section class="center">
+      <p style="color:#666; font-size:0.9em; margin-bottom:0.5em;">Vibe Coding 聖經</p>
+      <h1 style="font-size:3.5em; margin:0;">Chapter 19</h1>
+      <h2 style="border:none; margin-top:0.3em;">建立人類 + AI<br>開發團隊的標準</h2>
+    </section>
+
+    <!-- 本章目標 -->
+    <section>
+      <h2>本章目標</h2>
+      <ul>
+        <li>制定明確、可操作的 <strong>AI 助理規則</strong></li>
+        <li>介紹<strong>分級法</strong>——組織指導原則、團隊規範、專案最佳實踐</li>
+        <li>建立<strong>動態文件</strong>，記錄團隊每天的智慧與發現</li>
+        <li>探討 AI 對軟體開發<strong>新角色</strong>與 CS 課程的影響</li>
+      </ul>
+      <blockquote>一致性不是偶然出現的——讓廚房裡每個人都能以相同的高標準和通用的食譜來工作。</blockquote>
+    </section>
+
+    <!-- 19-1 分隔頁 -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>19-1</h1>
+        <h2>合作食譜：<br>建立共通的 AI 規則與標準</h2>
+      </div>
+    </section>
+
+    <!-- 19-1 規則三層級 -->
+    <section>
+      <h2>規則的三層結構</h2>
+      <table style="font-size:0.82em;">
+        <thead>
+          <tr><th>層級</th><th>範例</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>組織層</strong>（基礎）</td><td>禁引安全漏洞、執行靜態分析、commit 前跑測試</td></tr>
+          <tr><td><strong>團隊層</strong></td><td>命名規則、測試框架</td></tr>
+          <tr><td><strong>專案層</strong></td><td>單元測試使用 Vitest、腳本使用 tab 縮排</td></tr>
+        </tbody>
+      </table>
+      <ul style="font-size:0.83em; margin-top:0.7em;">
+        <li>AI 助理知道去哪裡找規則，新進人員也能快速上手</li>
+        <li>規則要全面但不能太長——否則沒人能全部遵守</li>
+        <li>開發者發現新技巧時，可整合進規則中</li>
+      </ul>
+    </section>
+
+    <!-- 19-1 動態文件（上） -->
+    <section>
+      <h2>動態文件與版本控制</h2>
+      <ul style="font-size:0.88em;">
+        <li><strong>文件內容</strong>：正在使用的 API、架構模式、元件結構</li>
+        <li><strong>效果</strong>：記錄 API retry pattern 能消除 90% 的暫時性錯誤</li>
+        <li><strong>日常打掃</strong>：每天保留最後一段時間，把 Markdown 餵給 AI 精簡</li>
+      </ul>
+      <blockquote>只要把規則都放進版本控制，所有人就都能用同一本食譜來做料理。</blockquote>
+    </section>
+
+    <!-- 19-1 動態文件（下） -->
+    <section>
+      <h2>動態文件與版本控制（續）</h2>
+      <ul style="font-size:0.88em;">
+        <li>目錄建議：<code>/ai-rules/org</code>、<code>/ai-rules/team</code>、<code>/ai-rules/project</code></li>
+        <li>個別化設定讓廚房分裂；統一設定才能共用</li>
+        <li>Google 單一 repo 策略：優秀實踐複製貼上即可共享</li>
+      </ul>
+    </section>
+
+    <!-- 19-2 分隔頁 -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>19-2</h1>
+        <h2>心靈融合與 AI 副主廚：<br>降低協調成本</h2>
+      </div>
+    </section>
+
+    <!-- 19-2 The Drift -->
+    <section>
+      <h2>The Drift：人機心靈融合</h2>
+      <ul style="font-size:0.88em;">
+        <li>Wharton 商學院經濟學家 <strong>Daniel Rock 博士</strong> 提出</li>
+        <li>靈感來自《環太平洋》——兩名駕駛心靈融合，操控機甲獵人對抗怪獸</li>
+        <li>消失的兩項協調成本：<strong>建立連線</strong>、<strong>傳遞資訊</strong></li>
+        <li style="font-size:0.95em;">Vibe coding 以「記紀速度」把想法轉化為共通認知、目標，甚至是程式碼</li>
+      </ul>
+    </section>
+
+    <!-- 19-2 The Drift 引言 -->
+    <section>
+      <h2>The Drift：核心意象</h2>
+      <blockquote>把軟體開發組織縮編成單一個人——前端、後端、資料庫、部署全包，不需要等待、不需要翻譯、沒有 GraphQL schema 的溝通誤會。</blockquote>
+    </section>
+
+    <!-- 19-2 Rock 案例 -->
+    <section>
+      <h2>Rock 案例</h2>
+      <ul style="font-size:0.86em;">
+        <li>Rock 博士發現 GitHub Apps，建立空白 Markdown，Claude 說「我要草擬一個真正的規格」</li>
+        <li>8 個問題後，草稿有了生命</li>
+        <li>星期三：Senior 工程師加入，建立自動化測試、整合 scaffolding</li>
+        <li>受過設計訓練的帳幕長在同一文件畫出 UI 流程</li>
+        <li>Claude 在每次輸入後持續改善規格，到星期三交出可執行原型</li>
+      </ul>
+    </section>
+
+    <!-- 19-2 FAAFO -->
+    <section>
+      <h2>FAAFO：速度的飛躍</h2>
+      <blockquote>3 人、在 2 天內完成本需數週的工作，開發能力提升 3 倍</blockquote>
+      <ul style="font-size:0.88em; margin-top:0.8em;">
+        <li><strong>FAAFO</strong>（Fuck Around And Find Out）= 快速實驗精神</li>
+        <li>AI 副主廚降低人與人之間的協調成本</li>
+        <li>The Drift 讓小團隊發揮大組織的能量</li>
+      </ul>
+    </section>
+
+    <!-- 19-3 分隔頁 -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>19-3</h1>
+        <h2>軟體開發的新角色</h2>
+      </div>
+    </section>
+
+    <!-- 19-3 新手去留問題 -->
+    <section>
+      <h2>新手去留問題</h2>
+      <ul style="font-size:0.88em;">
+        <li><strong>Matt Beane 博士</strong>（《The Skill Code》）：<em>novice optional problem</em></li>
+        <li>全新工作充滿陷阱，新角色容易浮於表面</li>
+        <li>倉庫自動化研究：機器人難以勝任邊緣情況，<strong>夜班工人成為「隱藏創新者」</strong></li>
+        <li>AI 代理取代入門工作 → 初階工程師的學習路徑正在消失</li>
+      </ul>
+    </section>
+
+    <!-- 19-3 自主的經濟原理 -->
+    <section>
+      <h2>為什麼開發者想要自主工作？</h2>
+      <ul style="font-size:0.88em;">
+        <li>渴望獨自工作或更自主工作的想法，來自於很簡單的<strong>經濟學原理</strong></li>
+        <li>機器人手術案例：專家會選擇獨立工作，因為<strong>每個多出的人類都會增加摩擦</strong>（住院醫生完成手術所需的時間是 10 倍長，事故也會更多）</li>
+        <li>軟體開發也遵循相同的曲線：只要能用 AI 實現全端的能力，就不需要<strong>「等待」其他職能的人</strong></li>
+      </ul>
+    </section>
+
+    <!-- 19-3 新手去留引言 -->
+    <section>
+      <h2>自主，不等於孤立</h2>
+      <blockquote>自主的意義並不是孤立，而是不受阻礙——自由快速行動、追求野心，不需要每一步都諮詢。</blockquote>
+    </section>
+
+    <!-- 19-3 七種新角色 -->
+    <section>
+      <h2>七種可能變得更重要的職務</h2>
+      <ul style="font-size:0.82em;">
+        <li><strong>產品原型師</strong>：PM 會拿起工具、做出原型交給開發者，也可能是 apt 開發人員會開始做產品管理工作</li>
+        <li><strong>平台設計師</strong>：三分之一的 PM、三分之一的設計師、三分之一的 infra 工程師，可以做出極致客製化的使用者平台</li>
+        <li><strong>AI 群集維修員</strong>：監督多個 AI 系統，在需要時介入</li>
+        <li><strong>AI 代理專家</strong>：建立並維護各領域 AI 代理的該領域專家</li>
+        <li><strong>AI 群集主管</strong>：指揮多個 AI 系統，設計互動結構</li>
+        <li><strong>平台工程師</strong>：推進技術堆疊，強化確定性，用沙盒和護欄來安全推送更多模糊的東西</li>
+        <li><strong>頂層工程師</strong>：把 vibe coding 產出的原型轉化為改良後的產品；修復 AI 遷移期間的老舊企業系統亂象</li>
+      </ul>
+    </section>
+
+    <!-- 19-4 分隔頁 -->
+    <section class="center">
+      <div class="chapter-title">
+        <h1>19-4</h1>
+        <h2>計算機科學課程的潛在變化</h2>
+      </div>
+    </section>
+
+    <!-- 19-4 程式碼閱讀 -->
+    <section>
+      <h2>程式碼閱讀</h2>
+      <ul style="font-size:0.85em;">
+        <li>一天處理幾千行程式碼的幾百個變更，已經不是罕見的狀況</li>
+        <li>學生應該要能看懂多種語言——C、Python、JavaScript、Kotlin 和其他語言——並練習快速瀏覽、找出藏在表面下的錯誤</li>
+        <li>AI 出錯時，就需要人類作為最後防線</li>
+        <li>學生需要成為速讀的專家，並養成如鷹眼般找出異常的敏銳觀察力</li>
+      </ul>
+    </section>
+
+    <!-- 19-4 溝通能力 -->
+    <section>
+      <h2>精確且清楚的溝通能力</h2>
+      <ul style="font-size:0.85em;">
+        <li>成功與否取決於引導 AI 助理的效果</li>
+        <li>過去開發人員用手打程式碼，幾乎不需要任何溝通技巧</li>
+        <li>但 vibe coding 需要清楚表達目標和指示，避免 AI 和人類的誤解</li>
+        <li>我們認為這是開發人員從根本上的角色轉變，需要邏輯思考、清晰的語言，以及在每一次迭代中改善指令的能力</li>
+      </ul>
+    </section>
+
+    <!-- 19-4 集中力 -->
+    <section>
+      <h2>集中力：持續執行複數專案</h2>
+      <ul style="font-size:0.85em;">
+        <li>使用複數 AI 代理時，需要持續在腦袋裡處理越來越大、也越來越多的問題</li>
+        <li>程式設計或許不再是一整天沉浸在同一個任務裡</li>
+        <li>每增加一個代理程式就需要更多的 context switch，這種負擔會隨著代理數量增加而越來越沉重</li>
+        <li>多工處理也需要真正的版本控制紀律，無論使用哪種流程，都要堅持每一步程序</li>
+      </ul>
+    </section>
+
+    <!-- 19-4 軟體結構 -->
+    <section>
+      <h2>軟體模組化和軟體結構</h2>
+      <ul style="font-size:0.85em;">
+        <li>理解大型系統的設計原理與目的、行動獨立性的達成途徑，以及在負載下的表現，這些都會比背誦程式語言的規格細節更重要</li>
+        <li>概念層面的基礎依然很重要——需要用於疑難排解、早期偵測、指導他人，以及引導整體的系統設計</li>
+      </ul>
+    </section>
+
+    <!-- 19-4 企業意識 -->
+    <section>
+      <h2>企業意識</h2>
+      <ul style="font-size:0.85em;">
+        <li>不管學生要進入大型科技公司或是創辦自己的企業，小型的 AI 驅動團隊都能覆蓋市場</li>
+        <li>瞭解商業和收益模型的基本知識、推銷想法的方式，還有和其他領域的合作，都會對學生很有幫助</li>
+        <li>特別是本身就具備技術專長、能創造實際 AI 方案的人，這些都是在新世界普遍實用的技能</li>
+      </ul>
+    </section>
+
+    <!-- 19-5 小結（上） -->
+    <section>
+      <h2>小結：廚房合作的重要作法</h2>
+      <ul style="font-size:0.85em;">
+        <li><strong>規畫「合作食譜」</strong>：把標準寫為動態的文件，會隨著團隊的知識和 AI 的能力提升而演進</li>
+        <li><strong>分級的指引</strong>：在組織、團隊和專案層級分別建立明確的規則，確保每個人都知道成功的配方</li>
+        <li><strong>接納「心智融合」</strong>：積極以設計實現共通的理解，減少摩擦並提升團隊的 FAAFO——讓你更快速、更有野心、更有樂趣</li>
+        <li><strong>培育新興人才</strong>：留意那些擅長人類與 AI 共舞的人，他們鍛造出的新角色會定義廚房的未來</li>
+      </ul>
+    </section>
+
+    <!-- 19-5 小結（下） -->
+    <section>
+      <h2>小結：廚房合作的重要作法（續）</h2>
+      <ul style="font-size:0.85em;">
+        <li><strong>投資於新時代的識讀能力</strong>：優先培養深度程式碼理解、明確溝通和強大的架構思維——這些在 AI 強化的世界中是首要的技能</li>
+        <li><strong>保持備料區的整潔</strong>：定期以 AI 協助，整理工作規則和 AI 的上下文，保持鋒利與高效</li>
+        <li><strong>把廚房的智慧歸檔</strong>：把工作標準儲存在 repository，讓每一位廚師——包括人類和 AI——都能存取和改進</li>
+      </ul>
+    </section>
+
+    <!-- Q&A -->
+    <section class="center">
+      <h2 style="border:none; font-size:2em;">Q &amp; A</h2>
+      <p style="color:#aaa;">謝謝聆聽</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    controls: true,
+    progress: true,
+    center: false,
+    width: 960,
+    height: 700,
+    margin: 0.08,
+  });
+</script>
+</body>
+</html>
